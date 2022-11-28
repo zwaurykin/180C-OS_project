@@ -127,12 +127,11 @@ void selectionSort(vector<int> arr, int n)
 // Driver Code
 int main()
 {
-	cout << "Please enter the size of the list.";
+	cout << "Please enter the size of the list."<< endl;
 	cin >> maxArr;
 
-	cout << "Multithreading MergeSort";
-	cout << endl;
-	cout << endl;
+	cout<<endl<<"*****************************************************************************************************"<<endl;
+
 	srand(time(nullptr));
 	// generating random values in array
 	for (int i = 0; i < maxArr; i++)
@@ -140,7 +139,7 @@ int main()
 		int r = 1 + (rand() % 100);
 		a.push_back(r);
 	}
-	cout << "Given array with size"<< maxArr<<"is";
+	cout << "Given array with size "<< maxArr<<" is:";
 
 	cout << endl;
 	for (int i = 0; i < maxArr; i++)
@@ -183,8 +182,8 @@ int main()
 	cout << endl;
 	// displaying sorted array
 	cout << "Sorted array via ";
-	selectionSortUsed ? cout << "Selection sort" : cout << "Merge sort";
-	cout << " is :" << endl;
+	selectionSortUsed ? cout << "Selection sort" : cout << "Multithreaded Merge sort";
+	cout << " is:" << endl;
 	for (int i = 0; i < maxArr; i++)
 		cout << a[i] << " ";
 	cout << endl;
