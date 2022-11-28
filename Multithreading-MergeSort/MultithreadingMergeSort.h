@@ -1,16 +1,17 @@
 #ifndef __MMS_H__
 #define __MMS_H__
-
-// number of elements in array
-#define MAX 20
-
-// number of threads
-#define THREAD_MAX 4
-
+#include <vector>
 using namespace std;
 
+int maxArr;
+vector<int> a;
+
+bool selectionSortUsed = false;
+// number of threads
+#define THREAD_MAX 3
+
+
 // array of size MAX
-int a[MAX];
 int part = 0;
 
 // merge function for merging two parts
