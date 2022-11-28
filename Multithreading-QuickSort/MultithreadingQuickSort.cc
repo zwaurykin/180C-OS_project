@@ -135,6 +135,9 @@ void selectionSort(vector<int> &a)
 }
 int main(int argc, char *argv[])
 {
+	clock_t start, end;
+	double time_difference;
+
 	cout << "Please enter the size of the list." << endl
 		 << endl;
 	cin >> maxArr;
@@ -147,19 +150,14 @@ int main(int argc, char *argv[])
 	// generating random values in array
 	for (int i = 0; i < maxArr; i++)
 	{
-		arr.push_back(1 + rand() % 100);
-		// arr[i]= 1 + rand() % 100);
+		arr.push_back(1 + rand() % 1000);
 	}
-	printf("Given array is: \n");
+	cout<<"Given array is: "<<endl;
 	for (int i = 0; i < maxArr; i++)
-		printf("%d ", arr[i]);
+		cout<< arr[i]<<" ";
 
-	printf("\n \n");
+	cout<<endl<<endl;
 
-	// t1 and t2 for calculating time for
-	// merge sort
-	clock_t start, end;
-	double time_difference;
 
 	start = clock();
 
@@ -196,21 +194,16 @@ int main(int argc, char *argv[])
 		pthread_join(tid3, NULL); /* join the thread */
 	}
 	end = clock();
-	printf("Sorted Array:\n");
-	int j;
-	for (j = 0; j < maxArr; j++)
-	{
-		if (j == maxArr - 1)
-		{
-			printf("%d", arr[j]);
-		}
-		else
-		{
-			printf("%d ", arr[j]);
-		}
-	}
-	time_difference = (double)(end - start) / CLOCKS_PER_SEC;
-	printf("\n\nTotal time taken by CPU: %f\n", time_difference);
+	
+	cout << "Sorted array via ";
+	selectionSortUsed ? cout << "Selection sort" : cout << "Multithreaded Quick sort";
+	cout << " is :" << endl;
+
+	for (int j = 0; j < maxArr; j++)
+		cout<<arr[j]<<" ";
+
+	time_difference = (end - start) / (double)CLOCKS_PER_SEC;
+	cout<< endl<<endl<<"Total time taken by CPU: "<<time_difference;
 	pthread_exit(0);
 
 	return 0;
