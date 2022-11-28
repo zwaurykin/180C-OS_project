@@ -107,24 +107,16 @@ void *run(void *p)
 
 void selectionSort(vector<int> &a)
 {
-	// step 1: loop from the beginning of the array to the second to last item
 	for (int currentIndex = 0; currentIndex < a.size() - 1; currentIndex++)
 	{
-		// step 2: save a copy of the currentIndex
 		int minIndex = currentIndex;
-		// step 3: loop through all indexes that proceed the currentIndex
 		for (int i = currentIndex + 1; i < a.size(); i++)
 		{
-			/* step 4:  if the value of the index of the current loop is less
-						than the value of the item at minIndex, update minIndex
-						with the new lowest value index */
 			if (a[i] < a[minIndex])
 			{
-				// update minIndex with the new lowest value index
 				minIndex = i;
 			}
 		}
-		// step 5: if minIndex has been updated, swap the values at minIndex and currentIndex
 		if (minIndex != currentIndex)
 		{
 			int temp = a[currentIndex];
@@ -147,17 +139,17 @@ int main(int argc, char *argv[])
 
 	/* Intializes random number generator */
 	srand((unsigned)time(NULL));
-	// generating random values in array
+	// generating random values in vector
 	for (int i = 0; i < maxArr; i++)
 	{
 		arr.push_back(1 + rand() % 1000);
 	}
-	cout<<"Given array is: "<<endl;
+	cout << "Given array is: " << endl;
 	for (int i = 0; i < maxArr; i++)
-		cout<< arr[i]<<" ";
+		cout << arr[i] << " ";
 
-	cout<<endl<<endl;
-
+	cout << endl
+		 << endl;
 
 	start = clock();
 
@@ -194,16 +186,18 @@ int main(int argc, char *argv[])
 		pthread_join(tid3, NULL); /* join the thread */
 	}
 	end = clock();
-	
+
 	cout << "Sorted array via ";
 	selectionSortUsed ? cout << "Selection sort" : cout << "Multithreaded Quick sort";
 	cout << " is :" << endl;
 
 	for (int j = 0; j < maxArr; j++)
-		cout<<arr[j]<<" ";
+		cout << arr[j] << " ";
 
 	time_difference = (end - start) / (double)CLOCKS_PER_SEC;
-	cout<< endl<<endl<<"Total time taken by CPU: "<<time_difference;
+	cout << endl
+		 << endl
+		 << "Total time taken by CPU: " << time_difference;
 	pthread_exit(0);
 
 	return 0;
