@@ -4,12 +4,18 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
+#include <iostream>
+#include <vector>
+using namespace std;
 
-#define MAX 20
+int maxArr;
+vector<int> arr;
+bool selectionSortUsed = false;
+//int arr[20];
+//#define MAX 20
 
 void *run(void *p); /* threads call this function */
-int array_master[20];
+//int array_master[20];
 void merge(int arr[], int left, int middle, int right);
 // function to swap two elements in the array
 void swap(int *a, int *b);

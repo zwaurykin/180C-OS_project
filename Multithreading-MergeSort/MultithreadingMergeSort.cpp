@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <time.h>
 
-void merge(int low, int mid, int high)
+/*void merge(int low, int mid, int high)
 {
 	int *left = new int[mid - low + 1];
 	int *right = new int[high - mid];
@@ -72,12 +72,65 @@ void merge_sort(int low, int high)
 		// merging the two halves
 		merge(low, mid, high);
 	}
+}*/
+
+// the interval from [s to m] and [m+1 to e] in v are sorted
+// the function will merge both of these intervals
+// such the interval from [s to e] in v becomes sorted
+void merge(vector<int>& v, int s, int m, int e) {
+	
+    // temp is used to temporary store the vector obtained by merging
+    // elements from [s to m] and [m+1 to e] in v
+	vector<int> temp;
+
+	int i, j;
+	i = s;
+	j = m + 1;
+
+	while (i <= m && j <= e) {
+
+		if (v[i] <= v[j]) {
+			temp.push_back(v[i]);
+			++i;
+		}
+		else {
+			temp.push_back(v[j]);
+			++j;
+		}
+
+	}
+
+	while (i <= m) {
+		temp.push_back(v[i]);
+		++i;
+	}
+
+	while (j <= e) {
+		temp.push_back(v[j]);
+		++j;
+	}
+
+	for (int i = s; i <= e; ++i)
+		v[i] = temp[i - s];
+
+}
+
+// the MergeSort function
+// Sorts the array in the range [s to e] in v using
+// merge sort algorithm
+void merge_sort(vector<int>& v, int s, int e) {
+	if (s < e) {
+		int m = (s + e) / 2;
+		merge_sort(v, s, m);
+		merge_sort(v, m + 1, e);
+		merge(v, s, m, e);
+	}
 }
 
 // thread function for multi-threading
 void *merge_sort(void *arg)
 {
-	// which part out of 4 parts
+	// which part out of 3 parts
 	int thread_part = part++;
 
 	// calculating low and high
@@ -88,40 +141,42 @@ void *merge_sort(void *arg)
 	int mid = low + (high - low) / 2;
 	if (low < high)
 	{
-		merge_sort(low, mid);
-		merge_sort(mid + 1, high);
-		merge(low, mid, high);
+		merge_sort(a,low, mid);
+		merge_sort(a,mid + 1, high);
+		merge(a,low, mid, high);
 	}
 }
 
-void swap(int *xp, int *yp)
+// void swap(int *xp, int *yp)
+// {
+// 	int temp = *xp;
+// 	*xp = *yp;
+// 	*yp = temp;
+// }
+
+void selectionSort(vector<int> &arr)
 {
-	int temp = *xp;
-	*xp = *yp;
-	*yp = temp;
-}
-
-void selectionSort(vector<int> arr, int n)
-{
-	int i, j, min_idx;
-
-	// One by one move boundary of
-	// unsorted subarray
-	for (i = 0; i < n - 1; i++)
-	{
-
-		// Find the minimum element in
-		// unsorted array
-		min_idx = i;
-		for (j = i + 1; j < n; j++)
-			if (arr[j] < arr[min_idx])
-				min_idx = j;
-
-		// Swap the found minimum element
-		// with the first element
-		if (min_idx != i)
-			swap(&arr[min_idx], &arr[i]);
-	}
+    // step 1: loop from the beginning of the array to the second to last item
+    for (int currentIndex = 0; currentIndex < arr.size() - 1; currentIndex++) {
+        // step 2: save a copy of the currentIndex
+        int minIndex = currentIndex;
+        // step 3: loop through all indexes that proceed the currentIndex
+        for (int i = currentIndex + 1; i < arr.size(); i++) {
+          /* step 4:  if the value of the index of the current loop is less
+                      than the value of the item at minIndex, update minIndex
+                      with the new lowest value index */
+            if (arr[i] < arr[minIndex]) {
+                // update minIndex with the new lowest value index
+                minIndex = i;
+            }
+        }
+        // step 5: if minIndex has been updated, swap the values at minIndex and currentIndex
+        if (minIndex != currentIndex) {
+            int temp = arr[currentIndex];
+            arr[currentIndex] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
+    }
 }
 
 // Driver Code
@@ -130,7 +185,7 @@ int main()
 	cout << "Please enter the size of the list."<< endl;
 	cin >> maxArr;
 
-	cout<<endl<<"*****************************************************************************************************"<<endl;
+	cout<<"*************************************************************************************************************"<<endl;
 
 	srand(time(nullptr));
 	// generating random values in array
@@ -153,7 +208,7 @@ int main()
 	t1 = clock();
 	if (maxArr < 100)
 	{
-		selectionSort(a, maxArr);
+		selectionSort(a);
 		selectionSortUsed = true;
 	}
 	else
@@ -174,16 +229,16 @@ int main()
 		}
 
 		// merging the final 3 parts
-		merge(0, (maxArr / 2 - 1) / 2, maxArr / 2 - 1);
-		merge(maxArr / 2, maxArr / 2 + (maxArr - 1 - maxArr / 2) / 2, maxArr - 1);
-		merge(0, (maxArr - 1) / 2, maxArr - 1);
+		merge(a, 0, (maxArr / 2 - 1) / 2, maxArr / 2 - 1);
+		merge(a,maxArr / 2, maxArr / 2 + (maxArr - 1 - maxArr / 2) / 2, maxArr - 1);
+		merge(a,0, (maxArr - 1) / 2, maxArr - 1);
 	}
 	t2 = clock();
 	cout << endl;
 	// displaying sorted array
 	cout << "Sorted array via ";
 	selectionSortUsed ? cout << "Selection sort" : cout << "Multithreaded Merge sort";
-	cout << " is:" << endl;
+	cout << " is :" << endl;
 	for (int i = 0; i < maxArr; i++)
 		cout << a[i] << " ";
 	cout << endl;
