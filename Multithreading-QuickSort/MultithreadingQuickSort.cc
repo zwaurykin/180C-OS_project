@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
 	// generating random values in vector
 	for (int i = 0; i < maxArr; i++)
 	{
-		arr.push_back(1 + rand() % 1000);
+		arr.push_back(1 + rand() % 1000000000);
 	}
 	cout << "Given array is: " << endl;
 	for (int i = 0; i < maxArr; i++)

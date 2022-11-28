@@ -63,8 +63,8 @@ void *merge_sort(void *arg)
 	int thread_part = part++;
 
 	// calculating low and high
-	int low = thread_part * (maxArr / 4);
-	int high = (thread_part + 1) * (maxArr / 4) - 1;
+	int low = thread_part * (maxArr / 2);
+	int high = (thread_part + 1) * (maxArr / 2) - 1;
 
 	// evaluating mid point
 	int mid = low + (high - low) / 2;
@@ -76,6 +76,7 @@ void *merge_sort(void *arg)
 	}
 	pthread_exit(0);
 }
+
 
 void selectionSort(vector<int> &arr)
 {
@@ -140,8 +141,9 @@ int main()
 			pthread_create(&threads[i], NULL, merge_sort, (void *)NULL);
 		}
 
+
 		// joining all 3 threads
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < THREAD_MAX; i++)
 		{
 			pthread_join(threads[i], NULL);
 		}

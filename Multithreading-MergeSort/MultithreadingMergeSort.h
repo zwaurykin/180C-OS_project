@@ -12,7 +12,7 @@ vector<int> a;
 
 bool selectionSortUsed = false;
 // number of threads
-#define THREAD_MAX 3
+#define THREAD_MAX 2
 
 
 // array of size MAX
